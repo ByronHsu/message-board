@@ -120,7 +120,7 @@ class CommentBoard extends Component {
           autoFocus
         />
         <input
-          type="textarea" placeholder="Say something"
+          type="text" placeholder="Say something"
           className="AddPostInput" value={this.state.Inputvalue}
           onKeyDown={this.handleKeyDown} onChange={this.handleChange}
 

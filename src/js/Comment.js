@@ -37,37 +37,41 @@ class Comment extends Component {
     this.setState({ reply: !this.state.reply });
   }
   render() {
-    let Replyinput;
+    let Replyinput,Replymap;
     if (this.state.reply === true){ 
-      Replyinput=
+      Replyinput =
       (
         <input
-          type="text" placeholder="Say something"
+          type="text" placeholder="Reply..."
           value={this.state.Inputvalue} onKeyDown={this.handleKeyDown} 
-          onChange={this.handleChange}
+          onChange={this.handleChange} className="ReplyInput"
+          autoFocus
         />
+      );
+      Replymap =
+      (
+        this.props.Content.Replys.map(Replys =>
+            <div className="Reply">
+              <h5 className="ReplyUser">{Replys.User}</h5>
+              <p className="ReplyMessage">{Replys.Message}</p>
+              <h5 className="ReplyTime">{Replys.Time}</h5>
+            </div>)
       );
     }
     return (
       <div className="Comment">
         <div className="CommentContent">
           <div className="CommentUp">
-            <strong>{this.props.Content.User} </strong>
-            {this.props.Content.Message}
+            <h5 className="CommentUser">{this.props.Content.User}</h5>
           </div>
           <div className="CommentDown">
-            <h5 className="CommentTime"> {this.props.Content.Time} </h5> <br />
-            <button className="ReplyButton" onClick={this.handleReplyOnClick}>Reply</button>
+            {this.props.Content.Message}<br />
           </div>
+          <h5 className="CommentTime"> {this.props.Content.Time} </h5>
+          <button className="ReplyButton" onClick={this.handleReplyOnClick}>Reply</button>
         </div>
+        {Replymap}
         {Replyinput}
-        {this.props.Content.Replys.map(Replys =>
-            <div>
-              <h3>{Replys.User}</h3>
-              <h3>{Replys.Time}</h3>
-              <h3>{Replys.Message}</h3>
-            </div>)}
-
        </div>
     );
   }

@@ -55,7 +55,9 @@ class Post extends Component {
           {this.props.Content.Comments.map(Comments =>
             <Comment
               Content={Comments} addReply={this.handleAddReply}
-          />)}
+            />)}
+        </div>
+        <div className="PostFooter">
           <input
             type="text" className="CommentInput"
             value={this.state.Inputvalue} onKeyDown={this.handleKeyDown} 
