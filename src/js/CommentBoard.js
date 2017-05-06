@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Post from './Post';
+import 'babel-polyfill';
+import fetch from 'isomorphic-fetch';
 import '../css/CommentBoard.css';
 
 class CommentBoard extends Component {
@@ -15,6 +17,26 @@ class CommentBoard extends Component {
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleAddComment = this.handleAddComment.bind(this);
     this.handleAddReply = this.handleAddReply.bind(this);
+  }
+  catchStatus = (response) => {
+    if (response.ok) {
+      return response;
+    } else {
+      let error = new Error(response.statusText);
+      error.response = response;
+      throw error;
+    }
+  }
+  componentWillMount() {
+    fetch(`/api/Posts`)
+      .then(this.catchStatus)
+      .then(response => response.json())
+      .then((Posts) => {
+        this.setState({ Posts : Posts });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   getNowTime() {
     const NowDate = new Date();
@@ -40,6 +62,14 @@ class CommentBoard extends Component {
           Comments: [],
         };
         Posts.push(NewPost);
+        fetch(`/api/Post`, {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(NewPost),
+        });
         this.setState({
           Posts,
         });
@@ -51,14 +81,32 @@ class CommentBoard extends Component {
     const Posts = this.state.Posts;
     Newcomment.User = this.state.User;
     Posts[Postid].Comments.push(Newcomment); 
+    console.log(Postid);
+    fetch(`/api/Post/Comment/?Postid=${Postid}`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(Newcomment),
+    });
     this.setState({
       Posts,
     });
+
   }
   handleAddReply(Postid, Commentid, Newreply) {
     const Posts = this.state.Posts;
     Newreply.User = this.state.User;
     Posts[Postid].Comments[Commentid].Replys.push(Newreply);
+    fetch(`/api/Post/Comment/Reply/?Postid=${Postid}&Commentid=${Commentid}`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(Newreply),
+    });
     this.setState({
       Posts,
     });
@@ -72,7 +120,7 @@ class CommentBoard extends Component {
           autoFocus
         />
         <input
-          type="text" placeholder="Say something"
+          type="textarea" placeholder="Say something"
           className="AddPostInput" value={this.state.Inputvalue}
           onKeyDown={this.handleKeyDown} onChange={this.handleChange}
 
