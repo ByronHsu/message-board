@@ -1,0 +1,59 @@
+.Comment{
+    display:flex;
+    position:relative;
+    width:100%;
+    flex-wrap:wrap;
+    min-height:5em;
+    height:auto;
+}
+.CommentContent{
+    display:flex;
+    position:relative;
+    width:100%;
+    flex-wrap:wrap;
+}
+.ReplyButton {
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
+}
+button.ReplyButton:focus {
+    outline: none;
+    background:none;
+}
+.CommentUp{
+    display:flex;
+    position:relative;
+    width:94%;
+    margin-top:0.5em;
+    margin-bottom:0.5em;
+    margin-left:3%;
+    margin-right:3%;
+    word-break: break-all;
+}
+.CommentText{
+    font-size:1.0em;
+    color:#1d2734;
+    margin-top:0;
+    margin-bottom:0;
+}
+.CommentDown{
+    display:flex;
+    position:relative;
+    width:100%;
+}
+.CommentUser{
+    display:flex;
+    position:relative;
+    width:12%;
+    font-size:1.2em;
+    font-weight:bold;
+    margin-top:0;
+    margin-bottom:0;
+}
+.CommentTime{
+    display:flex;
+    position:relative;
+    height:0.5em;
+}
