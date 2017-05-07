@@ -13,6 +13,8 @@ class Comment extends Component {
   }
   getNowTime() {
     const NowDate = new Date();
+
+    
     const Time = NowDate.getHours() + ':' + NowDate.getMinutes() + ':' + NowDate.getSeconds();
     return Time;
   }
