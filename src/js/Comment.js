@@ -13,8 +13,6 @@ class Comment extends Component {
   }
   getNowTime() {
     const NowDate = new Date();
-
-    
     const Time = NowDate.getHours() + ':' + NowDate.getMinutes() + ':' + NowDate.getSeconds();
     return Time;
   }
@@ -39,7 +37,8 @@ class Comment extends Component {
     this.setState({ reply: !this.state.reply });
   }
   render() {
-    let Replyinput,Replymap;
+    let Replyinput,Replymap,str;
+    str="img/"+this.props.Content.Img+".png";
     if (this.state.reply === true){ 
       Replyinput =
       (
@@ -54,14 +53,18 @@ class Comment extends Component {
       (
         this.props.Content.Replys.map(Replys =>
             <div className="Reply">
+              <img src={'img/' + Replys.Img + '.png'} className="ReplyImg" />
+              <div className="ReplyContent">
               <h5 className="ReplyUser">{Replys.User}</h5>
               <p className="ReplyMessage">{Replys.Message}</p>
               <h5 className="ReplyTime">{Replys.Time}</h5>
+              </div>
             </div>)
       );
     }
     return (
       <div className="Comment">
+        <img src={str} className="CommentImg" />
         <div className="CommentContent">
           <div className="CommentUp">
             <h5 className="CommentUser">{this.props.Content.User}</h5>

@@ -11,12 +11,14 @@ class CommentBoard extends Component {
       Posts: [
       ],
       Pnum: 0,
+      User: "",
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleAddComment = this.handleAddComment.bind(this);
     this.handleAddReply = this.handleAddReply.bind(this);
+    this.handleUserKeyDown = this.handleUserKeyDown.bind(this);
   }
   catchStatus = (response) => {
     if (response.ok) {
@@ -37,6 +39,7 @@ class CommentBoard extends Component {
       .catch((error) => {
         console.log(error);
       });
+      this.props.Materialize.toast('Type In Your Name First!!', 2000,"LoadIn"); // 4000 is the duration of the toast
   }
   getNowTime() {
     const NowDate = new Date();
@@ -47,11 +50,21 @@ class CommentBoard extends Component {
     this.setState({ Inputvalue: e.target.value });
   }
   handleUserChange(e) {
-    this.setState({ User: e.target.value });
+    this.setState({ User: e.target.value,Img:Math.floor(Math.random() * 7) + 1 });
+  }
+  handleUserKeyDown(e){
+    if(e.keyCode===13){
+      this.refs.UserInput.blur()
+    }
   }
   handleKeyDown(e) {
     switch (e.keyCode) {
       case 13:
+        if(this.state.User.length===0){
+          this.props.Materialize.toast('Type In Your Name First!!', 2000,"LoadIn");
+          this.refs.UserInput.focus()
+          return;
+        }
         e.preventDefault();
         const Posts = this.state.Posts;
         const NewPost = {
@@ -60,6 +73,7 @@ class CommentBoard extends Component {
           Time: this.getNowTime(),
           Postid: this.state.Pnum ++,
           Comments: [],
+          Img: this.state.Img,
         };
         Posts.push(NewPost);
         fetch(`/api/Post`, {
@@ -80,8 +94,8 @@ class CommentBoard extends Component {
   handleAddComment(Postid, Newcomment) {
     const Posts = this.state.Posts;
     Newcomment.User = this.state.User;
+    Newcomment.Img = this.state.Img;
     Posts[Postid].Comments.push(Newcomment); 
-    console.log(Postid);
     fetch(`/api/Post/Comment/?Postid=${Postid}`, {
       method: 'post',
       headers: {
@@ -98,6 +112,7 @@ class CommentBoard extends Component {
   handleAddReply(Postid, Commentid, Newreply) {
     const Posts = this.state.Posts;
     Newreply.User = this.state.User;
+    Newreply.Img = this.state.Img;
     Posts[Postid].Comments[Commentid].Replys.push(Newreply);
     fetch(`/api/Post/Comment/Reply/?Postid=${Postid}&Commentid=${Commentid}`, {
       method: 'post',
@@ -117,13 +132,12 @@ class CommentBoard extends Component {
         <input
           type="text" placeholder="UserName" className="UserInput"
           value={this.state.User} onChange={this.handleUserChange}
-          autoFocus
+          autoFocus ref="UserInput" onKeyDown={this.handleUserKeyDown}
         />
         <input
           type="text" placeholder="Say something"
           className="AddPostInput" value={this.state.Inputvalue}
           onKeyDown={this.handleKeyDown} onChange={this.handleChange}
-
         />
         {this.state.Posts.map(Posts =>
           <Post

@@ -11,13 +11,6 @@
     margin-bottom:0.5em;
     background-color:rgba(239, 185, 187, 0.09);
 }
-.CommentContent{
-    display:flex;
-    position:relative;
-    width:100%;
-    flex-wrap:wrap;
-    margin-bottom:1em;
-}
 .ReplyButton {
     display:flex;
     position:relative;
@@ -79,7 +72,7 @@ button.ReplyButton:focus {
     color: rgba(149, 152, 159, 0.48);
     margin-top:0;
     margin-bottom:0;
-    margin-left:3.0em;
+    margin-left:1.2em;
     margin-right:1.0em;
 }
 .ReplyInput[type=text]{
@@ -97,21 +90,6 @@ button.ReplyButton:focus {
 .ReplyInput[type=text]:focus:not([readonly]){
     border: solid 1px rgba(51,51,51,0.12);
     box-shadow:none;
-}
-.Reply{
-    display:flex;
-    position:relative;
-    width:100%;
-    font-size: 1.3rem;
-    font-size: 1.0rem;
-    flex-wrap:wrap;
-    margin-left:3em;
-    padding-top:0.5em;
-    padding-bottom:0.5em;
-    margin-top:0.5em;
-    margin-bottom:0.5em;
-    margin-right:1em;
-    background-color:rgba(239, 185, 187, 0.09);
 }
 .ReplyUser{
     display:flex;
@@ -143,4 +121,61 @@ button.ReplyButton:focus {
     margin-bottom:0;
     color:#1d2734;
     word-break:break-all;
+}
+.CommentImg{
+    background-color: #fbf1f1;
+    box-shadow: 0 0 0.1em 0.1em #ee6e73;
+    display:inline-flex;
+    position:relative;
+    border-radius: 1.8em;
+    padding: 0.2em 0.2em 0.2em 0.2em;
+    width:2.6em;
+    height:2.6em;
+    left:0.7em;
+    top:1.1em;
+}
+.CommentContent{
+    display:inline-flex;
+    position:relative;
+    width:85%;
+    flex-wrap:wrap;
+    margin-bottom:1em;
+    left:0.5em;
+}
+.Reply{
+    display:flex;
+    position:relative;
+    width:100%;
+    font-size: 1.3rem;
+    font-size: 1.0rem;
+    flex-wrap:wrap;
+    margin-left:3em;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+    margin-top:0.5em;
+    margin-bottom:0.5em;
+    margin-right:1em;
+    background-color:rgba(239, 185, 187, 0.09);
+}
+.ReplyImg{
+    background-color: #fbf1f1;
+    box-shadow: 0 0 0.1em 0.1em #ee6e73;
+    display:inline-flex;
+    position:relative;
+    border-radius: 1.8em;
+    padding: 0.2em 0.2em 0.2em 0.2em;
+    width:2.3em;
+    height:2.3em;
+    left:1.0em;
+    top:0.5em;
+}
+.ReplyContent{
+    display:inline-flex;
+    position:relative;
+    width:80%;
+    flex-wrap:wrap;
+    left:1em;
+}
+.toast.LoadIn{
+    background-color: #ffbfc2;
 }
