@@ -90,3 +90,26 @@
     display:flex;
     width:100%;
 }
+.CommentBtn{
+    cursor:pointer;
+    position:relative;
+    display:flex;
+    align-content:center;
+    bottom:0.5em;
+    left:1.6em;
+}
+.CommentBtn:hover{
+    color:#ffccce;
+}
+.material-icons.Cicon{
+    font-size:1.5em;
+    margin-right:0.1em;
+    color:inherit;
+}
+.Ctext{
+    position:relative;
+    display:flex;
+    bottom:0.22em;
+    font-size:1.2em;
+    color:inherit;
+}

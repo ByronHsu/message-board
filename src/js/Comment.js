@@ -6,15 +6,11 @@ class Comment extends Component {
     this.state = {
       Rnum: 0,
       reply: 0,
+      Inputvalue: '',
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleReplyOnClick = this.handleReplyOnClick.bind(this);
-  }
-  getNowTime() {
-    const NowDate = new Date();
-    const Time = NowDate.getHours() + ':' + NowDate.getMinutes() + ':' + NowDate.getSeconds();
-    return Time;
   }
   handleChange(e) {
     this.setState({ Inputvalue: e.target.value });
@@ -22,14 +18,18 @@ class Comment extends Component {
   handleKeyDown(e) {
     switch (e.keyCode) {
       case 13:
+        if (this.state.Inputvalue.length === 0) {
+          return;
+        }
         e.preventDefault();
         const Newreply = {
           Message: this.state.Inputvalue,
-          Time: this.getNowTime(),
           Replyid: this.state.Rnum++,
         };
+        if (!this.props.addReply(this.props.Content.Commentid, Newreply)) {
+          return;
+        }
         this.setState({ Inputvalue: '' });
-        this.props.addReply(this.props.Content.Commentid, Newreply);
         break;
     }
   }
@@ -38,7 +38,6 @@ class Comment extends Component {
   }
   render() {
     let Replyinput,Replymap,str;
-    str="img/"+this.props.Content.Img+".png";
     if (this.state.reply === true){ 
       Replyinput =
       (
@@ -64,7 +63,7 @@ class Comment extends Component {
     }
     return (
       <div className="Comment">
-        <img src={str} className="CommentImg" />
+        <img src={'img/'+this.props.Content.Img+'.png'} className="CommentImg" />
         <div className="CommentContent">
           <div className="CommentUp">
             <h5 className="CommentUser">{this.props.Content.User}</h5>

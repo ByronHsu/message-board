@@ -12,6 +12,7 @@ class CommentBoard extends Component {
       ],
       Pnum: 0,
       User: "",
+      Inputvalue: "",
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -42,15 +43,26 @@ class CommentBoard extends Component {
       this.props.Materialize.toast('Type In Your Name First!!', 2000,"LoadIn"); // 4000 is the duration of the toast
   }
   getNowTime() {
-    const NowDate = new Date();
-    const Time = NowDate.getHours() + ':' + NowDate.getMinutes() + ':' + NowDate.getSeconds();
-    return Time;
+    const time = new Date();
+    let t=[];
+    t[0] = time.getFullYear();
+    t[1] = time.getMonth();
+    t[2] = time.getDate();
+    t[3] = time.getHours();
+    t[4] = time.getMinutes();
+    t[5] = time.getSeconds();
+    for(let i=3;i<=5;i++){
+      if(t[i]>=0&&t[i]<=9){
+        t[i]='0'+t[i];
+      }
+    }
+    return `${t[0]}/${t[1]}/${t[2]} ${t[3]}:${t[4]}:${t[5]}`;
   }
   handleChange(e) {
     this.setState({ Inputvalue: e.target.value });
   }
   handleUserChange(e) {
-    this.setState({ User: e.target.value,Img:Math.floor(Math.random() * 7) + 1 });
+    this.setState({ User: e.target.value,Img:Math.floor(Math.random() * 20) + 1 });
   }
   handleUserKeyDown(e){
     if(e.keyCode===13){
@@ -60,6 +72,9 @@ class CommentBoard extends Component {
   handleKeyDown(e) {
     switch (e.keyCode) {
       case 13:
+        if(this.state.Inputvalue.length===0){
+          return;
+        }
         if(this.state.User.length===0){
           this.props.Materialize.toast('Type In Your Name First!!', 2000,"LoadIn");
           this.refs.UserInput.focus()
@@ -92,9 +107,15 @@ class CommentBoard extends Component {
     }
   }
   handleAddComment(Postid, Newcomment) {
+    if(this.state.User.length===0){
+      this.props.Materialize.toast('Type In Your Name First!!', 2000,"LoadIn");
+      this.refs.UserInput.focus()
+      return false;
+    }
     const Posts = this.state.Posts;
     Newcomment.User = this.state.User;
     Newcomment.Img = this.state.Img;
+    Newcomment.Time = this.getNowTime();
     Posts[Postid].Comments.push(Newcomment); 
     fetch(`/api/Post/Comment/?Postid=${Postid}`, {
       method: 'post',
@@ -107,12 +128,18 @@ class CommentBoard extends Component {
     this.setState({
       Posts,
     });
-
+    return true;
   }
   handleAddReply(Postid, Commentid, Newreply) {
+    if(this.state.User.length===0){
+      this.props.Materialize.toast('Type In Your Name First!!', 2000,"LoadIn");
+      this.refs.UserInput.focus()
+      return false;
+    }
     const Posts = this.state.Posts;
     Newreply.User = this.state.User;
     Newreply.Img = this.state.Img;
+    Newreply.Time = this.getNowTime();
     Posts[Postid].Comments[Commentid].Replys.push(Newreply);
     fetch(`/api/Post/Comment/Reply/?Postid=${Postid}&Commentid=${Commentid}`, {
       method: 'post',
@@ -125,6 +152,7 @@ class CommentBoard extends Component {
     this.setState({
       Posts,
     });
+    return true;
   }
   render() {
     return (
