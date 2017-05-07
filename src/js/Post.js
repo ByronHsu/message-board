@@ -40,9 +40,13 @@ class Post extends Component {
     this.props.addReply(this.props.Content.Postid, Commentid, Newreply);
   }
   render() {
+    let num,str;
+    num=Math.floor((Math.random() * 7) + 1);
+    str="img/"+num+".png";
     return (
       <div className="Post">   
         <div className="PostContent">
+          <img src={str} className="PostImg" />
           <div className="PostTitle">
             <h className="PostTitleUser">{this.props.Content.User}</h> 
             <h className="PostTitleTime">{this.props.Content.Time}</h>
