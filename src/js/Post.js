@@ -8,6 +8,7 @@ class Post extends Component {
     super(props);
     this.state = {
       comment: 0,
+      Inputvalue: '',
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleChange = this.handleChange.bind(this);

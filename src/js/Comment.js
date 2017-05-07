@@ -4,7 +4,6 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Rnum: 0,
       reply: 0,
       Inputvalue: '',
     };
