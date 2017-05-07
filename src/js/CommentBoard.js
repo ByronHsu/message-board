@@ -10,7 +10,6 @@ class CommentBoard extends Component {
     this.state = {
       Posts: [
       ],
-      Pnum: 0,
       User: "",
       Inputvalue: "",
     };
@@ -86,7 +85,7 @@ class CommentBoard extends Component {
           Message: this.state.Inputvalue,
           User: this.state.User,
           Time: this.getNowTime(),
-          Postid: this.state.Pnum ++,
+          Postid: this.state.Posts.length,
           Comments: [],
           Img: this.state.Img,
         };
@@ -100,7 +99,7 @@ class CommentBoard extends Component {
           body: JSON.stringify(NewPost),
         });
         this.setState({
-          Posts,
+          Posts
         });
         this.setState({ Inputvalue: ''});
         break;

@@ -7,7 +7,6 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Cnum: 0,
       comment: 0,
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -30,7 +29,7 @@ class Post extends Component {
         e.preventDefault();
         const Newcomment = {
           Message: this.state.Inputvalue,
-          Commentid: this.state.Cnum++,
+          Commentid: this.props.Content.Comments.length,
           Replys: [],
           Inputvalue: '',
         };
