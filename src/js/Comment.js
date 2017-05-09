@@ -23,9 +23,8 @@ class Comment extends Component {
         e.preventDefault();
         const Newreply = {
           Message: this.state.Inputvalue,
-          Replyid: this.props.Content.Replys.length,
         };
-        if (!this.props.addReply(this.props.Content.Commentid, Newreply)) {
+        if (!this.props.addReply(this.props.Commentid, Newreply)) {
           return;
         }
         this.setState({ Inputvalue: '' });

@@ -45,7 +45,7 @@ class CommentBoard extends Component {
     const time = new Date();
     let t=[];
     t[0] = time.getFullYear();
-    t[1] = time.getMonth();
+    t[1] = time.getMonth()+1;
     t[2] = time.getDate();
     t[3] = time.getHours();
     t[4] = time.getMinutes();
@@ -85,7 +85,6 @@ class CommentBoard extends Component {
           Message: this.state.Inputvalue,
           User: this.state.User,
           Time: this.getNowTime(),
-          Postid: this.state.Posts.length,
           Comments: [],
           Img: this.state.Img,
         };
@@ -166,10 +165,10 @@ class CommentBoard extends Component {
           className="AddPostInput" value={this.state.Inputvalue}
           onKeyDown={this.handleKeyDown} onChange={this.handleChange}
         />
-        {this.state.Posts.map(Posts =>
+        {this.state.Posts.map((Posts,i) =>
           <Post
             Content={Posts} addComment={this.handleAddComment}
-            addReply={this.handleAddReply}
+            addReply={this.handleAddReply} Postid={i}
           />)}
       </div>
     );

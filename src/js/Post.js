@@ -30,11 +30,10 @@ class Post extends Component {
         e.preventDefault();
         const Newcomment = {
           Message: this.state.Inputvalue,
-          Commentid: this.props.Content.Comments.length,
           Replys: [],
           Inputvalue: '',
         };
-        if (!this.props.addComment(this.props.Content.Postid,Newcomment)){
+        if (!this.props.addComment(this.props.Postid,Newcomment)){
           return;
         }
         this.setState({ Inputvalue: '' });
@@ -42,7 +41,7 @@ class Post extends Component {
     }
   }
   handleAddReply(Commentid, Newreply) {
-    if (!this.props.addReply(this.props.Content.Postid, Commentid, Newreply)){
+    if (!this.props.addReply(this.props.Postid, Commentid, Newreply)){
       return false;
     }else{
       return true;
@@ -53,9 +52,10 @@ class Post extends Component {
     if (this.state.comment === true){
       PostComment = (
         <div className="PostComment">
-          {this.props.Content.Comments.map(Comments =>
+          {this.props.Content.Comments.map( (Comments, i) =>
             <Comment
               Content={Comments} addReply={this.handleAddReply}
+              Commentid={i}
             />)}
         </div>
       );
